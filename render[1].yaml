@@ -1,0 +1,19 @@
+# ── render.yaml ─────────────────────────────────────────────────────────────
+# File di configurazione per deploy su Render.com (gratuito)
+# Carica questa cartella su GitHub, poi importa il repo su Render
+
+services:
+  - type: web
+    name: riconciliazione-contabile
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PASS_OPERATORE
+        generateValue: false        # ← imposta manualmente su Render
+      - key: PASS_REVISORE
+        generateValue: false        # ← imposta manualmente su Render
+    disk:
+      name: data
+      mountPath: /opt/render/project/src
+      sizeGB: 1
